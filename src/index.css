@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --primary: #7C3AED;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+html { scroll-behavior: smooth; }
+
+/* Custom cursor styles */
+:root { --primary: #7C3AED; }
+
+/* Hide native cursor when our custom cursor is active (desktop only) */
+@media (pointer: fine) {
+  body { cursor: none; }
+}
+
+.glass { @apply bg-white/60 dark:bg-black/50 backdrop-blur-md rounded-lg shadow-lg }
+
+/* Improve default glass card radius */
+.rounded-2xl { border-radius: 1rem; }
+
+/* Ensure content doesn't overflow on small screens */
+img { max-width: 100%; height: auto; }
+
+
+body {
+  @apply bg-white text-black antialiased;
+  font-family: var(--sans);
+}
+
+.container-lg {
+  max-width: 1126px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.fade-up { @apply opacity-0 translate-y-4 transition-all duration-500 ease-out; }
+.fade-up.visible { @apply opacity-100 translate-y-0; }
+
+.glass { @apply bg-white/60 dark:bg-black/50 backdrop-blur-md rounded-lg shadow-lg }
+/* Fade Up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 1s ease forwards;
+}
+
+/* Fade */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1.2s ease forwards;
+}
+
+
+/* Hide scrollbar completely */
+.hide-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.hide-scrollbar::-webkit-scrollbar-track {
+  background: black; /* black so invisible */
+}
+
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  background: black;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none; /* Firefox */
+}

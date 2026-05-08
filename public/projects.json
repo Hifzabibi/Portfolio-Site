@@ -1,0 +1,28 @@
+{
+  "projects": [
+    {
+      "id": "1",
+      "title": "Portfolio Website",
+      "description": "A modern portfolio built with React, Tailwind CSS, and RTK Query.",
+      "image": "/src/assets/hero.png",
+      "github": "https://github.com/hifza/portfolio",
+      "live": "#"
+    },
+    {
+      "id": "2",
+      "title": "E-commerce UI",
+      "description": "Responsive e-commerce UI implemented with React and Tailwind.",
+      "image": "/src/assets/hero.png",
+      "github": "https://github.com/hifza/ecommerce-ui",
+      "live": "#"
+    },
+    {
+      "id": "3",
+      "title": "Dashboard App",
+      "description": "Admin dashboard showcasing data fetching with RTK Query.",
+      "image": "/src/assets/hero.png",
+      "github": "https://github.com/hifza/dashboard",
+      "live": "#"
+    }
+  ]
+}
