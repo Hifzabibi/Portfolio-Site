@@ -11,6 +11,7 @@ export default function About() {
   return (
     <section id="about" className="py-20 px-6 md:px-10">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+
         {/* LEFT SIDE IMAGE */}
         <motion.div
           initial={{ opacity: 0, x: -100 }}
@@ -19,85 +20,215 @@ export default function About() {
           viewport={{ once: true }}
           className="relative flex flex-col items-center"
         >
+
           {/* IMAGE CONTAINER */}
-          <div className="w-full h-[400px] md:h-[350px] rounded-3xl overflow-hidden shadow-2xl group">
+          <div className="group relative w-full h-[400px] md:h-[350px] rounded-3xl overflow-hidden shadow-2xl">
+
             <img
               src={pick}
               alt="Hifza"
-              className="w-full h-full object-cover transition duration-700 group-hover:scale-105"
+              className="
+                w-full
+                h-full
+                object-cover
+                transition-transform
+                duration-700
+                group-hover:scale-105
+              "
+            />
+
+            {/* OPTIONAL OVERLAY */}
+            <div
+              className="
+                absolute
+                inset-0
+                bg-black/10
+                opacity-0
+                group-hover:opacity-100
+                transition
+                duration-500
+              "
             />
           </div>
 
           {/* SOCIAL ICONS */}
-          <div className="flex gap-6 bg-white dark:bg-black px-8 py-4 rounded-xl shadow-xl mt-[-30px]">
-            <a href="#" className="text-[#7C3AED] hover:scale-110 transition">
+          <div
+            className="
+              relative
+              z-20
+              flex
+              gap-6
+              bg-white
+              dark:bg-black
+              px-8
+              py-4
+              rounded-xl
+              shadow-xl
+              mt-[-30px]
+            "
+          >
+
+            {/* Instagram */}
+            <a
+              href="#"
+              className="
+                text-[#7C3AED]
+                transition-transform
+                duration-300
+                hover:scale-110
+                hover:text-[#6D28D9]
+              "
+            >
               <FaInstagram size={20} />
             </a>
-            <a href="#" className="text-[#7C3AED] hover:scale-110 transition">
+
+            {/* Linkedin */}
+            <a
+              href="#"
+              className="
+                text-[#7C3AED]
+                transition-transform
+                duration-300
+                hover:scale-110
+                hover:text-[#6D28D9]
+              "
+            >
               <FaLinkedin size={20} />
             </a>
-            <a href="#" className="text-[#7C3AED] hover:scale-110 transition">
+
+            {/* Github */}
+            <a
+              href="#"
+              className="
+                text-[#7C3AED]
+                transition-transform
+                duration-300
+                hover:scale-110
+                hover:text-[#6D28D9]
+              "
+            >
               <FaGithub size={20} />
             </a>
+
           </div>
+
         </motion.div>
 
-        {/* RIGHT SIDE (UNCHANGED UI) */}
+        {/* RIGHT SIDE */}
         <motion.div
           initial={{ opacity: 0, x: 100 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
+
           <h2
-            className={`text-5xl md:text-6xl font-extrabold mt-4 mb-4 ${
-              darkMode ? "text-white" : "text-black"
-            }`}
+            className={`
+              text-5xl
+              md:text-6xl
+              font-extrabold
+              mt-4
+              mb-4
+              ${darkMode ? "text-white" : "text-black"}
+            `}
           >
             About <span className="text-[#7C3AED]">Me</span>
           </h2>
 
           <p
-            className={`${
-              darkMode ? "text-gray-400" : "text-gray-500"
-            } leading-relaxed mb-6`}
+            className={`
+              ${
+                darkMode
+                  ? "text-gray-400"
+                  : "text-gray-500"
+              }
+              leading-relaxed
+              mb-6
+            `}
           >
-            I am a passionate Frontend Developer specializing in React.js. I
-            build responsive, scalable, and high-performance web applications
-            with modern UI/UX principles.
-            I offer complete digital services for clients, specializing in the creation of stylish, modern websites and powerful web services — blending intuitive design with cutting-edge functionality to deliver seamless user experiences.
+            I am a passionate Frontend Developer specializing in
+            React.js. I build responsive, scalable, and
+            high-performance web applications with modern UI/UX
+            principles.
+
+            I offer complete digital services for clients,
+            specializing in the creation of stylish, modern
+            websites and powerful web services — blending
+            intuitive design with cutting-edge functionality to
+            deliver seamless user experiences.
           </p>
 
           <p
-            className={`${
-              darkMode ? "text-gray-400" : "text-gray-500"
-            } leading-relaxed mb-8`}
+            className={`
+              ${
+                darkMode
+                  ? "text-gray-400"
+                  : "text-gray-500"
+              }
+              leading-relaxed
+              mb-8
+            `}
           >
-            My focus is on writing clean code, optimizing performance, and
-            delivering smooth digital experiences.
+            My focus is on writing clean code, optimizing
+            performance, and delivering smooth digital
+            experiences.
           </p>
 
           <div className="flex gap-4 flex-wrap">
+
+            {/* DOWNLOAD CV */}
             <a
               href={cvFile}
               download
-              className="flex items-center gap-2 bg-[#7C3AED] text-white px-6 py-3 rounded-2xl hover:scale-105 transition duration-300"
+              className="
+                flex
+                items-center
+                gap-2
+                bg-[#7C3AED]
+                text-white
+                px-6
+                py-3
+                rounded-2xl
+                hover:scale-105
+                transition
+                duration-300
+              "
             >
               Download CV <Download size={18} />
             </a>
 
+            {/* CONTACT BUTTON */}
             <button
               onClick={() =>
                 document
                   .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" })
+                  ?.scrollIntoView({
+                    behavior: "smooth",
+                  })
               }
-              className="flex items-center gap-2 border border-[#7C3AED] px-6 py-3 rounded-2xl text-[#7C3AED] hover:bg-[#7C3AED] hover:text-white transition duration-300"
+              className="
+                flex
+                items-center
+                gap-2
+                border
+                border-[#7C3AED]
+                px-6
+                py-3
+                rounded-2xl
+                text-[#7C3AED]
+                hover:bg-[#7C3AED]
+                hover:text-white
+                transition
+                duration-300
+              "
             >
               Contact Me <Mail size={18} />
             </button>
+
           </div>
+
         </motion.div>
+
       </div>
     </section>
   );
