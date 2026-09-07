@@ -1,7 +1,6 @@
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Stats from "./components/Stats";
-import { useSelector } from "react-redux";
 import About from "./components/About";
 import Experience from "./components/Experience";
 import Projects from "./components/Projects";
@@ -11,18 +10,10 @@ import Footer from "./components/Footer";
 import Cursor from "./components/Cursor";
 
 function App() {
-  const { darkMode } = useSelector((state) => state.theme);
-
   return (
-    <div
-      className={`min-h-screen w-full transition-all duration-500 ${
-        darkMode
-          ? "bg-gradient-to-br from-[#0f0f1a] via-[#121212] to-[#0a0a0a] text-white"
-          : "bg-white text-black"
-      }`}
-    >
+    <div className="min-h-screen w-full bg-gradient-to-br from-[#0f0f1a] via-[#121212] to-[#0a0a0a] text-white">
       {/* CENTER CONTAINER */}
-      <div className="max-w-6xl mx-auto px-6 md:px-10">
+      <div className="">
         <Cursor />
         <Navbar />
         <Hero />

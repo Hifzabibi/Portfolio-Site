@@ -1,120 +1,278 @@
-import { Moon, Sun, Menu, X } from "lucide-react";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleTheme } from "../store/themeSlice";
+import { Menu, X, Briefcase } from "lucide-react";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { menuItems } from "../data/portfolioData";
 
 export default function Navbar() {
-  const dispatch = useDispatch();
-  const { darkMode } = useSelector((state) => state.theme);
-
-  const menuItems = [
-    { name: "Home", id: "home" },
-    { name: "About", id: "about" },
-    { name: "Skills", id: "skills" },
-    { name: "Experience", id: "experience" },
-    { name: "Projects", id: "projects" },
-    { name: "Contact", id: "contact" },
-  ];
-
   const [active, setActive] = useState("home");
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const sections = menuItems.map((m) => document.getElementById(m.id));
+
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+          }
         });
       },
-      { root: null, rootMargin: "-40% 0px -40% 0px", threshold: 0 }
+      {
+        root: null,
+        rootMargin: "-40% 0px -40% 0px",
+        threshold: 0,
+      }
     );
+
     sections.forEach((s) => s && obs.observe(s));
+
     return () => obs.disconnect();
   }, []);
 
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "smooth",
+    });
+
+    setOpen(false);
+  };
+
   return (
-  <nav className={`sticky top-0 w-full z-50 ${darkMode ? 'bg-[#0B1220] border-b border-gray-800' : 'bg-[#7C3AED] border-b border-[#7C3AED]'}`}>
-      {/* FULL WIDTH BACKGROUND */}
-      <div className="w-full">
-        {/* CENTER CONTENT */}
-        <div className="max-w-6xl mx-auto px-6 md:px-10 py-5 flex justify-between items-center">
-          {/* LOGO */}
-          <h1
-            onClick={() =>
-              document
-                .getElementById("home")
-                ?.scrollIntoView({ behavior: "smooth" })
-            }
-              className={`text-lg md:text-xl font-extrabold cursor-pointer ${darkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#7C3AED] to-purple-400' : 'text-white'}`}
+    <>
+      {/* TOP BLUR */}
+      <div className="fixed top-0 left-0 w-full h-24 bg-[#7C3AED]/10 blur-3xl z-30 pointer-events-none" />
+
+      {/* NAVBAR */}
+      <motion.nav
+        initial={{ y: -80, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.7 }}
+        className="
+          sticky
+          top-0
+          z-50
+          w-full
+          backdrop-blur-xl
+          bg-[#0B1220]/80
+          border-b
+          border-white/10
+        "
+      >
+        <div
+          className="
+            max-w-7xl
+            mx-auto
+            px-6
+            md:px-10
+            lg:px-12
+            py-5
+            flex
+            items-center
+            justify-between
+          "
+        >
+          {/* LEFT LOGO */}
+          <motion.h1
+            whileHover={{
+              scale: 1.08,
+            }}
+            onClick={() => scrollTo("home")}
+            className="
+              text-2xl
+              font-black
+              cursor-pointer
+              text-transparent
+              bg-clip-text
+              bg-gradient-to-r
+              from-[#7C3AED]
+              via-purple-400
+              to-pink-500
+              tracking-wider
+            "
           >
             HJ
-          </h1>
+          </motion.h1>
 
-          {/* MENU */}
-            <ul className={`hidden md:flex gap-8 text-sm font-medium ${darkMode ? 'text-gray-400' : 'text-white'}`}>
+          {/* DESKTOP MENU */}
+          <ul className="hidden md:flex items-center gap-10">
             {menuItems.map((item, i) => (
-              <li
+              <motion.li
                 key={i}
-                onClick={() =>
-                  document
-                    .getElementById(item.id)
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                  className={`relative cursor-pointer transition duration-300 group cursor-expand ${active === item.id ? (darkMode ? 'text-[#7C3AED]' : 'text-white') : (darkMode ? 'text-gray-400' : 'text-white')}`}
+                whileHover={{ y: -2 }}
+                onClick={() => scrollTo(item.id)}
+                className={`
+                  relative
+                  text-[15px]
+                  font-medium
+                  cursor-pointer
+                  transition-all
+                  duration-300
+
+                  ${
+                    active === item.id
+                      ? "text-[#A855F7]"
+                      : "text-gray-300 hover:text-white"
+                  }
+                `}
               >
                 {item.name}
-                  <span className={`absolute left-0 -bottom-1 h-[2px] transition-all duration-300 ${active===item.id ? (darkMode ? 'w-full bg-[#7C3AED]' : 'w-full bg-white') : 'w-0 bg-[#7C3AED]'}`}></span>
-              </li>
+
+                <span
+                  className={`
+                    absolute
+                    left-0
+                    -bottom-2
+                    h-[2px]
+                    rounded-full
+                    bg-gradient-to-r
+                    from-[#7C3AED]
+                    to-pink-500
+                    transition-all
+                    duration-300
+
+                    ${
+                      active === item.id
+                        ? "w-full"
+                        : "w-0 group-hover:w-full"
+                    }
+                  `}
+                />
+              </motion.li>
             ))}
           </ul>
 
-          {/* MOBILE */}
-          <div className="md:hidden flex items-center gap-3">
-            <button
-              onClick={() => setOpen((v) => !v)}
-              aria-label="Toggle menu"
-              className="p-2 rounded-md hover:bg-white/5"
+          {/* RIGHT SIDE */}
+          <div className="flex items-center gap-3">
+            {/* HIRE BUTTON */}
+            <motion.button
+              whileHover={{
+                scale: 1.05,
+              }}
+              whileTap={{
+                scale: 0.95,
+              }}
+              onClick={() => scrollTo("contact")}
+              className="
+                hidden
+                md:flex
+                items-center
+                gap-2
+                px-5
+                py-2.5
+                rounded-full
+                bg-gradient-to-r
+                from-[#7C3AED]
+                to-purple-500
+                text-white
+                font-medium
+                shadow-[0_0_25px_rgba(124,58,237,0.4)]
+                hover:shadow-[0_0_35px_rgba(124,58,237,0.7)]
+                transition-all
+                duration-300
+              "
             >
-                {open ? <X size={20} className={darkMode ? 'text-gray-400' : 'text-white'} /> : <Menu size={20} className={darkMode ? 'text-gray-400' : 'text-white'} />}
+              <Briefcase size={18} />
+              Hire Me
+            </motion.button>
+
+            {/* MOBILE MENU BUTTON */}
+            <button
+              onClick={() => setOpen(!open)}
+              className="
+                md:hidden
+                p-2
+                rounded-lg
+                border
+                border-white/10
+                bg-white/5
+                text-white
+              "
+            >
+              {open ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
-
-          {/* THEME TOGGLE */}
-          <button
-            onClick={() => dispatch(toggleTheme())}
-            className="p-2 rounded-full hover:bg-[#7C3AED]/10 transition duration-300 hover:scale-110"
-          >
-              {darkMode ? (
-                <Sun size={22} className={darkMode ? 'text-gray-400' : 'text-white'} />
-              ) : (
-                <Moon size={22} className={darkMode ? 'text-gray-400' : 'text-white'} />
-              )}
-          </button>
         </div>
-      </div>
 
-      {/* Mobile panel */}
+        {/* MOBILE MENU */}
+        <AnimatePresence>
           {open && (
-              <div className={`md:hidden ${darkMode ? 'bg-[#071023]/80 border-t border-gray-800' : 'bg-[#7C3AED] border-t border-[#7C3AED]'}`}>
-                <ul className="flex flex-col gap-4 px-6 py-4">
-            {menuItems.map((item, i) => (
-              <li
-                key={i}
-                onClick={() => {
-                  document
-                    .getElementById(item.id)
-                    ?.scrollIntoView({ behavior: "smooth" });
-                  setOpen(false);
-                }}
-                      className={`cursor-pointer py-2 ${active===item.id ? (darkMode ? 'text-[#7C3AED]' : 'text-white') : (darkMode ? 'text-gray-400' : 'text-white')}`}
-              >
-                {item.name}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </nav>
+            <motion.div
+              initial={{
+                opacity: 0,
+                y: -20,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                y: -20,
+              }}
+              transition={{
+                duration: 0.3,
+              }}
+              className="
+                md:hidden
+                px-6
+                pb-6
+                bg-[#0B1220]/95
+                backdrop-blur-xl
+                border-t
+                border-white/10
+              "
+            >
+              <ul className="flex flex-col gap-5 pt-5">
+                {menuItems.map((item, i) => (
+                  <motion.li
+                    key={i}
+                    whileHover={{ x: 6 }}
+                    onClick={() => scrollTo(item.id)}
+                    className={`
+                      cursor-pointer
+                      text-[15px]
+                      transition-all
+                      duration-300
+
+                      ${
+                        active === item.id
+                          ? "text-[#A855F7]"
+                          : "text-gray-300"
+                      }
+                    `}
+                  >
+                    {item.name}
+                  </motion.li>
+                ))}
+
+                {/* MOBILE HIRE BUTTON */}
+                <button
+                  onClick={() => scrollTo("contact")}
+                  className="
+                    mt-3
+                    flex
+                    items-center
+                    justify-center
+                    gap-2
+                    w-full
+                    py-3
+                    rounded-xl
+                    bg-gradient-to-r
+                    from-[#7C3AED]
+                    to-purple-500
+                    text-white
+                    font-medium
+                  "
+                >
+                  <Briefcase size={18} />
+                  Hire Me
+                </button>
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </>
   );
 }

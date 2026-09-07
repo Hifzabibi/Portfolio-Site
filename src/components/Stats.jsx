@@ -1,60 +1,30 @@
+import { motion } from "framer-motion";
+
+const stats = [
+  { value: "10+", label: "Technologies" },
+  { value: "6", label: "Projects" },
+  { value: "2+", label: "Years Learning" },
+  { value: "100%", label: "Curiosity" },
+];
+
 export default function Stats() {
-  const skills = [
-    "React.js",
-    "JavaScript",
-    "Tailwind CSS",
-    "HTML5",
-    "CSS3",
-    "Bootstrap",
-    "Node.js",
-    "GitHub",
-    "REST APIs",
-    "React Hooks",
-    "Responsive Design",
-  ];
-
   return (
-    <div className="animate-fadeInUp">
-
-      {/* STATS */}
-      <div className="flex flex-wrap justify-center gap-6 pb-10">
-        {[
-          { value: "2+", label: "Years Learning" },
-          { value: "5+", label: "Projects" },
-          { value: "100%", label: "Dedication" },
-        ].map((item, i) => (
-          <div
-            key={i}
-            className="p-6 w-40 text-center rounded-xl backdrop-blur-md bg-white/5 border border-white/10 shadow-lg hover:scale-105 transition"
+    <div className="px-6 md:px-10 lg:px-12">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+        {stats.map((stat, index) => (
+          <motion.div
+            key={stat.label}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.08 }}
+            className="border border-white/10 bg-white/5 rounded-2xl p-5 text-center"
           >
-            <h2 className="text-3xl font-bold text-[#7C3AED]">
-              {item.value}
-            </h2>
-            <p className="text-sm text-gray-600 dark:text-gray-500">{item.label}</p>
-          </div>
+            <p className="text-2xl md:text-3xl font-black text-[#7C3AED]">{stat.value}</p>
+            <p className="mt-1 text-sm text-gray-400">{stat.label}</p>
+          </motion.div>
         ))}
       </div>
-
-      {/* FULL WIDTH SKILLS BAR (YOUR WEBSITE COLORS) */}
-      <div className="w-screen relative left-1/2 right-1/2 -translate-x-1/2 bg-gradient-to-r from-[#7C3AED] via-[#9333EA] to-[#2563EB] py-5">
-
-        <div className="flex flex-wrap justify-center items-center gap-x-10 gap-y-3 text-white text-sm md:text-base font-medium px-6">
-
-          {skills.map((skill, index) => (
-            <div key={index} className="flex items-center gap-4">
-              <span className="hover:opacity-100 opacity-90 transition cursor-pointer">
-                {skill}
-              </span>
-
-              {index !== skills.length - 1 && (
-                <span className="text-white/70 text-lg">•</span>
-              )}
-            </div>
-          ))}
-
-        </div>
-      </div>
-
     </div>
   );
 }

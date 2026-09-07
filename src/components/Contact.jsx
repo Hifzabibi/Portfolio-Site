@@ -1,262 +1,12 @@
-// import { Copy } from "lucide-react";
-// import { useRef, useState } from "react";
-// import emailjs from "@emailjs/browser";
-// import { motion } from "framer-motion";
-// import { useSelector } from "react-redux";
-
-// export default function Contact() {
-//   const email = "hissijadoon@gmail.com";
-//   const formRef = useRef(null);
-//   const [status, setStatus] = useState(null);
-//   const [sending, setSending] = useState(false);
-
-//   const { darkMode } = useSelector((state) => state.theme);
-
-//   const copyEmail = () => {
-//     navigator.clipboard.writeText(email);
-//     setStatus({ type: "info", message: "Email copied to clipboard" });
-//     setTimeout(() => setStatus(null), 2000);
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-//     const formEl = formRef.current;
-//     if (!formEl) return;
-
-//     const formData = new FormData(formEl);
-//     const name = formData.get("name")?.toString().trim();
-//     const from_email = formData.get("email")?.toString().trim();
-//     const message = formData.get("message")?.toString().trim();
-
-//     if (!name || !from_email || !message) {
-//       setStatus({
-//         type: "error",
-//         message: "Please fill all required fields (Name, Email, Message).",
-//       });
-//       return;
-//     }
-
-//     const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-//     const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-//     const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
-//     if (!serviceID || !templateID || !publicKey) {
-//       console.error("Missing EmailJS env vars", {
-//         serviceID,
-//         templateID,
-//         publicKey,
-//       });
-//       setStatus({
-//         type: "error",
-//         message:
-//           "Contact is not configured. Please set EmailJS environment variables (VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, VITE_EMAILJS_PUBLIC_KEY).",
-//       });
-//       return;
-//     }
-
-//     setSending(true);
-//     setStatus({ type: "info", message: "Sending message..." });
-//     try {
-//       // Use formRef.current explicitly per spec
-//       const res = await emailjs.sendForm(
-//         serviceID,
-//         templateID,
-//         formRef.current,
-//         publicKey,
-//       );
-//       console.log("EmailJS response:", res);
-//       setStatus({ type: "success", message: "Message sent. Thank you!" });
-//       // reset the form fields
-//       formEl.reset();
-//     } catch (err) {
-//       console.error("EmailJS send error:", err);
-//       const userMessage =
-//         err?.text || err?.message || "Failed to send. Please try again later.";
-//       setStatus({ type: "error", message: `Send failed: ${userMessage}` });
-//     } finally {
-//       setSending(false);
-//       // keep status visible a bit longer on success/error
-//       setTimeout(() => setStatus(null), 5000);
-//     }
-//   };
-
-//   return (
-//     <section
-//       id="contact"
-//       className="py-24 px-6 md:px-12 text-black dark:text-white"
-//     >
-//       <div className="text-center mb-16">
-//         <h2
-//           className={`text-4xl md:text-5xl font-bold mb-12 ${darkMode ? "text-white" : "text-black"}`}
-//         >
-//           Contact <span className="text-[#7C3AED]">Me</span>
-//         </h2>
-//       </div>
-//       <div className="grid md:grid-cols-2 gap-16 items-start">
-//         {/* LEFT SIDE */}
-//         <motion.div
-//           initial={{ opacity: 0, x: -100 }}
-//           whileInView={{ opacity: 1, x: 0 }}
-//           transition={{ duration: 0.6 }}
-//           viewport={{ once: true }}
-//           className="space-y-10 "
-//         >
-//           {/* HEADING */}
-//           <div>
-//             <h1
-//               className={`text-4xl md:text-5xl font-bold leading-tight ${
-//                 darkMode ? "text-white" : "text-black"
-//               }`}
-//             >
-//               Let's Build
-//             </h1>
-
-//             <h2 className="text-4xl md:text-5xl font-bold text-[#7C3AED]">
-//               Something Great
-//             </h2>
-
-//             <p className="text-gray-700 dark:text-gray-400 mt-6 max-w-xl">
-//               I'm actively looking for opportunities. If you're hiring a
-//               frontend developer or building a project, let's talk.
-//             </p>
-//           </div>
-
-//           {/* EMAIL */}
-//           <div className="flex justify-between items-center border border-gray-300 dark:border-gray-700 rounded-xl p-5 bg-gray-100 dark:bg-white/5 backdrop-blur-md text-black dark:text-white">
-//             <div>
-//               <p className="text-[#7C3AED] text-sm">Email</p>
-//               <p className="text-black  dark:text-gray-400">{email}</p>
-//             </div>
-
-//             <button
-//               onClick={copyEmail}
-//               className="flex items-center gap-2 text-sm bg-[#7C3AED]/30 px-3 py-1 rounded-md hover:bg-[#7C3AED]/40 transition"
-//             >
-//               <Copy size={16} /> Copy
-//             </button>
-//           </div>
-
-//           {/* PHONE */}
-//           <div className="border border-gray-300 dark:border-gray-700 rounded-xl p-5 bg-gray-100 dark:bg-white/5 backdrop-blur-md text-black dark:text-white">
-//             <p className="text-[#7C3AED] text-sm">Phone</p>
-//             <p className="text-black  dark:text-gray-400">+92 3321536332</p>
-//           </div>
-
-//           {/* LOCATION */}
-//           <div className="border border-gray-300 dark:border-gray-700 rounded-xl p-5 bg-gray-100 dark:bg-white/5 backdrop-blur-md text-black dark:text-white ">
-//             <p className="text-[#7C3AED] text-sm">Location</p>
-//             <p className="text-black  dark:text-gray-400">
-//               Abbottabad, Khyber Pakhtunkhwa PK
-//             </p>
-//           </div>
-
-//           <a
-//             href="https://www.linkedin.com/in/hifza-jadoon-28001b318"
-//             target="_blank"
-//             rel="noopener noreferrer"
-//             className="text-sm tracking-widest text-[#7C3AED] hover:underline mt-6 inline-block"
-//           >
-//             VIEW LINKEDIN PROFILE →
-//           </a>
-//         </motion.div>
-
-//         {/* RIGHT SIDE FORM */}
-//         <motion.div
-//           initial={{ opacity: 0, x: 100 }}
-//           whileInView={{ opacity: 1, x: 0 }}
-//           transition={{ duration: 0.6 }}
-//           viewport={{ once: true }}
-//           className="border border-[#7C3AED]/30 rounded-2xl p-6 bg-black/5 dark:bg-white/5 backdrop-blur-lg mt-4"
-//         >
-//           <h3
-//             className={`text-2xl font-semibold mb-5 ${
-//               darkMode ? "text-white" : "text-black"
-//             }`}
-//           >
-//             Send Me a Message
-//           </h3>
-
-//           <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
-//             <div>
-//               <label className="text-sm text-gray-700 dark:text-gray-500">
-//                 Full Name *
-//               </label>
-//               <input
-//                 name="name"
-//                 type="text"
-//                 placeholder="Enter your name"
-//                 className="w-full mt-2 px-4 py-2 rounded-lg bg-transparent border border-gray-400 dark:border-gray-700 focus:border-[#7C3AED] outline-none text-black dark:text-white"
-//               />
-//             </div>
-
-//             <div>
-//               <label className="text-sm text-gray-600 dark:text-gray-500">
-//                 Email *
-//               </label>
-//               <input
-//                 name="email"
-//                 type="email"
-//                 placeholder="Enter your email"
-//                 className="w-full mt-2 px-4 py-2 rounded-lg bg-transparent border border-gray-400 dark:border-gray-700 focus:border-[#7C3AED] outline-none text-black dark:text-white"
-//               />
-//             </div>
-
-//             <div>
-//               <label className="text-sm text-gray-600 dark:text-gray-500">
-//                 Subject
-//               </label>
-//               <input
-//                 name="subject"
-//                 type="text"
-//                 placeholder="Enter subject"
-//                 className="w-full mt-2 px-4 py-2 rounded-lg bg-transparent border border-gray-400 dark:border-gray-700 focus:border-[#7C3AED] outline-none text-black dark:text-white"
-//               />
-//             </div>
-
-//             <div>
-//               <label className="text-sm text-gray-600 dark:text-gray-500">
-//                 Message *
-//               </label>
-//               <textarea
-//                 name="message"
-//                 rows="4"
-//                 placeholder="Write your message..."
-//                 className="w-full mt-2 px-4 py-2 rounded-lg bg-transparent border border-gray-400 dark:border-gray-700 focus:border-[#7C3AED] outline-none text-black dark:text-white resize-none"
-//               ></textarea>
-//             </div>
-
-//             <button
-//               type="submit"
-//               disabled={sending}
-//               className="w-full bg-[#7C3AED] hover:bg-[#6D28D9] transition py-3 rounded-2xl font-semibold text-white cursor-expand"
-//             >
-//               {sending ? "Sending..." : "Send Message →"}
-//             </button>
-//           </form>
-
-//           {status && (
-//             <div
-//               className={`mt-4 p-3 rounded-md ${status.type === "success" ? "bg-green-100 text-green-800" : status.type === "error" ? "bg-red-100 text-red-800" : "bg-gray-100 text-gray-800"}`}
-//             >
-//               {status.message}
-//             </div>
-//           )}
-//         </motion.div>
-//       </div>
-//     </section>
-//   );
-// }
-
-
-
 import { Copy } from "lucide-react";
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
-import { useSelector } from "react-redux";
+import Section from "./common/Section";
+import { profile } from "../data/portfolioData";
 
 export default function Contact() {
-  const email = "hissijadoon@gmail.com";
+  const { email, phone, location, socialLinks } = profile;
 
   const formRef = useRef(null);
 
@@ -265,8 +15,6 @@ export default function Contact() {
   const [sending, setSending] = useState(false);
 
   const [errors, setErrors] = useState({});
-
-  const { darkMode } = useSelector((state) => state.theme);
 
   const copyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -298,7 +46,6 @@ export default function Contact() {
 
     let newErrors = {};
 
-    // VALIDATIONS
     if (!name) {
       newErrors.name = "Full Name is required";
     }
@@ -372,306 +119,285 @@ export default function Contact() {
   };
 
   return (
-    <section
-      id="contact"
-      className="py-24 px-6 md:px-12 text-black dark:text-white"
-    >
-      {/* HEADING */}
-      <div className="text-center mb-16">
-        <h2
-          className={`text-4xl md:text-5xl font-bold mb-12 ${
-            darkMode ? "text-white" : "text-black"
-          }`}
-        >
-          Contact <span className="text-[#7C3AED]">Me</span>
-        </h2>
-      </div>
+    <Section id="contact">
+      {/* BACKGROUND GLOW */}
+      <div className="absolute top-0 left-0 w-72 h-72 bg-[#7C3AED]/20 blur-3xl rounded-full" />
 
-      <div className="grid md:grid-cols-2 gap-16 items-start">
-        {/* LEFT SIDE */}
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-cyan-500/10 blur-3xl rounded-full" />
+
+      {/* MAIN CONTAINER */}
+      <div>
+        {/* HEADING */}
         <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 60 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
           viewport={{ once: true }}
-          className="space-y-10"
+          className="text-center mb-20"
         >
-          <div>
-            <h1
-              className={`text-4xl md:text-5xl font-bold leading-tight ${
-                darkMode ? "text-white" : "text-black"
-              }`}
-            >
-              Let's Build
-            </h1>
+          <h2
+            className="section-heading text-white"
+          >
+            Contact <span className="text-[#7C3AED]">Me</span>
+          </h2>
 
-            <h2 className="text-4xl md:text-5xl font-bold text-[#7C3AED]">
-              Something Great
-            </h2>
+          <p
+            className="mt-5 text-lg text-gray-400"
+          >
+            Let's create something beautiful together
+          </p>
+        </motion.div>
 
-            <p className="text-gray-700 dark:text-gray-400 mt-6 max-w-xl">
-              I'm actively looking for opportunities. If you're hiring a
-              frontend developer or building a project, let's talk.
-            </p>
-          </div>
-
-          {/* EMAIL */}
-          <div className="flex justify-between items-center border border-gray-300 dark:border-gray-700 rounded-xl p-5 bg-gray-100 dark:bg-white/5 backdrop-blur-md">
+        {/* CONTENT */}
+        <div className="grid lg:grid-cols-2 gap-14 items-start">
+          {/* LEFT SIDE */}
+          <motion.div
+            initial={{ opacity: 0, x: -120 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            {/* TITLE */}
             <div>
-              <p className="text-[#7C3AED] text-sm">Email</p>
+              <h1
+                className="text-5xl md:text-6xl font-black leading-tight text-white"
+              >
+                Let's Build
+              </h1>
 
-              <p className="text-black dark:text-gray-400">
-                {email}
+              <h2 className="text-5xl md:text-6xl font-black text-[#7C3AED] mt-2">
+                Something Great
+              </h2>
+
+              <p
+                className="mt-6 max-w-xl leading-relaxed text-lg text-gray-400"
+              >
+                I'm actively looking for opportunities. If you're hiring
+                a frontend developer or building a project, let's talk.
               </p>
             </div>
 
-            <button
-              onClick={copyEmail}
-              className="flex items-center gap-2 text-sm bg-[#7C3AED]/30 px-3 py-1 rounded-md hover:bg-[#7C3AED]/40 transition"
+            {/* INFO CARDS */}
+            <div className="space-y-5">
+              {/* EMAIL */}
+              <motion.div
+                whileHover={{ scale: 1.02, y: -4 }}
+                className="flex justify-between items-center p-6 rounded-3xl border bg-white/5 border-white/10 backdrop-blur-xl transition-all duration-300"
+              >
+                <div>
+                  <p className="text-[#7C3AED] text-sm mb-1">Email</p>
+
+                  <p
+                    className="font-medium text-gray-300"
+                  >
+                    {email}
+                  </p>
+                </div>
+
+                <button
+                  onClick={copyEmail}
+                  className="flex items-center gap-2 bg-[#7C3AED] text-white px-4 py-2 rounded-xl hover:scale-105 transition"
+                >
+                  <Copy size={16} />
+                  Copy
+                </button>
+              </motion.div>
+
+              {/* PHONE */}
+              <motion.div
+                whileHover={{ scale: 1.02, y: -4 }}
+                className="p-6 rounded-3xl border bg-white/5 border-white/10 backdrop-blur-xl transition-all duration-300"
+              >
+                <p className="text-[#7C3AED] text-sm mb-1">Phone</p>
+
+                <p
+                  className="font-medium text-gray-300"
+                >
+                    {phone}
+                </p>
+              </motion.div>
+
+              {/* LOCATION */}
+              <motion.div
+                whileHover={{ scale: 1.02, y: -4 }}
+                className="p-6 rounded-3xl border bg-white/5 border-white/10 backdrop-blur-xl transition-all duration-300"
+              >
+                <p className="text-[#7C3AED] text-sm mb-1">Location</p>
+
+                <p
+                  className="font-medium text-gray-300"
+                >
+                  {location}
+                </p>
+              </motion.div>
+            </div>
+
+            {/* LINKEDIN */}
+            <motion.a
+              whileHover={{ x: 8 }}
+              href={socialLinks.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block text-[#7C3AED] tracking-[3px] text-sm font-semibold"
             >
-              <Copy size={16} />
-              Copy
-            </button>
-          </div>
+              VIEW LINKEDIN PROFILE →
+            </motion.a>
+          </motion.div>
 
-          {/* PHONE */}
-          <div className="border border-gray-300 dark:border-gray-700 rounded-xl p-5 bg-gray-100 dark:bg-white/5">
-            <p className="text-[#7C3AED] text-sm">Phone</p>
-
-            <p className="text-black dark:text-gray-400">
-              +92 3321536332
-            </p>
-          </div>
-
-          {/* LOCATION */}
-          <div className="border border-gray-300 dark:border-gray-700 rounded-xl p-5 bg-gray-100 dark:bg-white/5">
-            <p className="text-[#7C3AED] text-sm">Location</p>
-
-            <p className="text-black dark:text-gray-400">
-              Abbottabad, Khyber Pakhtunkhwa PK
-            </p>
-          </div>
-
-          <a
-            href="https://www.linkedin.com/in/hifza-jadoon-28001b318"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm tracking-widest text-[#7C3AED] hover:underline mt-6 inline-block"
+          {/* RIGHT SIDE FORM */}
+          <motion.div
+            initial={{ opacity: 0, x: 120 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="relative rounded-[35px] p-8 md:p-10 border bg-white/5 border-white/10 backdrop-blur-2xl"
           >
-            VIEW LINKEDIN PROFILE →
-          </a>
-        </motion.div>
+            {/* TOP GLOW */}
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#7C3AED]/20 blur-3xl rounded-full" />
 
-        {/* RIGHT SIDE */}
-        <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="border border-[#7C3AED]/30 rounded-2xl p-6 bg-black/5 dark:bg-white/5 backdrop-blur-lg mt-4"
-        >
-          <h3
-            className={`text-2xl font-semibold mb-5 ${
-              darkMode ? "text-white" : "text-black"
-            }`}
-          >
-            Send Me a Message
-          </h3>
+            <h3
+              className="text-3xl font-bold mb-8 relative z-10 text-white"
+            >
+              Send Me a Message
+            </h3>
 
-          <form
-            ref={formRef}
-            onSubmit={handleSubmit}
-            className="space-y-4"
-          >
-            {/* NAME */}
-            <div>
-              <label className="text-sm text-gray-700 dark:text-gray-600">
-                Full Name *
-              </label>
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              className="space-y-5 relative z-10"
+            >
+              {/* NAME */}
+              <div>
+                <label className="text-sm text-gray-500">
+                  Full Name *
+                </label>
 
-              <input
-                name="name"
-                type="text"
-                placeholder="Enter your name"
-                className={`
+                <input
+                  name="name"
+                  type="text"
+                  placeholder="Enter your name"
+                  className="w-full mt-2 px-5 py-4 rounded-2xl border outline-none transition-all duration-300 bg-black/40 border-gray-700 text-white focus:border-[#7C3AED] focus:scale-[1.01]"
+                />
+
+                {errors.name && (
+                  <p className="text-red-500 text-sm mt-2">
+                    {errors.name}
+                  </p>
+                )}
+              </div>
+
+              {/* EMAIL */}
+              <div>
+                <label className="text-sm text-gray-500">
+                  Email *
+                </label>
+
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full mt-2 px-5 py-4 rounded-2xl border outline-none transition-all duration-300 bg-black/40 border-gray-700 text-white focus:border-[#7C3AED] focus:scale-[1.01]"
+                />
+
+                {errors.email && (
+                  <p className="text-red-500 text-sm mt-2">
+                    {errors.email}
+                  </p>
+                )}
+              </div>
+
+              {/* SUBJECT */}
+              <div>
+                <label className="text-sm text-gray-500">
+                  Subject *
+                </label>
+
+                <input
+                  name="subject"
+                  type="text"
+                  placeholder="Enter subject"
+                  className="w-full mt-2 px-5 py-4 rounded-2xl border outline-none transition-all duration-300 bg-black/40 border-gray-700 text-white focus:border-[#7C3AED] focus:scale-[1.01]"
+                />
+
+                {errors.subject && (
+                  <p className="text-red-500 text-sm mt-2">
+                    {errors.subject}
+                  </p>
+                )}
+              </div>
+
+              {/* MESSAGE */}
+              <div>
+                <label className="text-sm text-gray-500">
+                  Message *
+                </label>
+
+                <textarea
+                  name="message"
+                  rows="5"
+                  placeholder="Write your message..."
+                  className="w-full mt-2 px-5 py-4 rounded-2xl border outline-none resize-none transition-all duration-300 bg-black/40 border-gray-700 text-white focus:border-[#7C3AED] focus:scale-[1.01]"
+                ></textarea>
+
+                {errors.message && (
+                  <p className="text-red-500 text-sm mt-2">
+                    {errors.message}
+                  </p>
+                )}
+              </div>
+
+              {/* BUTTON */}
+              <motion.button
+                whileHover={{
+                  scale: 1.02,
+                  y: -2,
+                }}
+                whileTap={{
+                  scale: 0.98,
+                }}
+                type="submit"
+                disabled={sending}
+                className="
                   w-full
-                  mt-2
-                  px-4
-                  py-3
-                  rounded-lg
-                  border
-                  outline-none
+                  py-4
+                  rounded-2xl
+                  bg-[#7C3AED]
+                  hover:bg-[#6D28D9]
+                  text-white
+                  font-semibold
+                  shadow-[0_10px_40px_rgba(124,58,237,0.4)]
                   transition-all
+                  duration-300
+                "
+              >
+                {sending ? "Sending..." : "Send Message →"}
+              </motion.button>
+            </form>
 
-                  ${
-                    darkMode
-                      ? "bg-black text-white border-gray-700"
-                      : "bg-[#F5F3FF] text-black border-[#7C3AED]"
-                  }
-
-                  focus:border-[#7C3AED]
-                `}
-              />
-
-              {errors.name && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.name}
-                </p>
-              )}
-            </div>
-
-            {/* EMAIL */}
-            <div>
-              <label className="text-sm text-gray-700 dark:text-gray-600">
-                Email *
-              </label>
-
-              <input
-                name="email"
-                type="email"
-                placeholder="Enter your email"
+            {/* STATUS */}
+            {status && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
                 className={`
-                  w-full
-                  mt-2
-                  px-4
-                  py-3
-                  rounded-lg
-                  border
-                  outline-none
+                  mt-5 p-4 rounded-2xl text-sm font-medium
 
                   ${
-                    darkMode
-                      ? "bg-black text-white border-gray-700"
-                      : "bg-[#F5F3FF] text-black border-[#7C3AED]"
+                    status.type === "success"
+                      ? "bg-green-500/20 text-green-400"
+                      : status.type === "error"
+                      ? "bg-red-500/20 text-red-400"
+                      : "bg-gray-500/20 text-gray-300"
                   }
-
-                  focus:border-[#7C3AED]
                 `}
-              />
-
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.email}
-                </p>
-              )}
-            </div>
-
-            {/* SUBJECT */}
-            <div>
-              <label className="text-sm text-gray-700 dark:text-gray-600">
-                Subject *
-              </label>
-
-              <input
-                name="subject"
-                type="text"
-                placeholder="Enter subject"
-                className={`
-                  w-full
-                  mt-2
-                  px-4
-                  py-3
-                  rounded-lg
-                  border
-                  outline-none
-
-                  ${
-                    darkMode
-                      ? "bg-black text-white border-gray-700"
-                      : "bg-[#F5F3FF] text-black border-[#7C3AED]"
-                  }
-
-                  focus:border-[#7C3AED]
-                `}
-              />
-
-              {errors.subject && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.subject}
-                </p>
-              )}
-            </div>
-
-            {/* MESSAGE */}
-            <div>
-              <label className="text-sm text-gray-700 dark:text-gray-600">
-                Message *
-              </label>
-
-              <textarea
-                name="message"
-                rows="4"
-                placeholder="Write your message..."
-                className={`
-                  w-full
-                  mt-2
-                  px-4
-                  py-3
-                  rounded-lg
-                  border
-                  outline-none
-                  resize-none
-
-                  ${
-                    darkMode
-                      ? "bg-black text-white border-gray-700"
-                      : "bg-[#F5F3FF] text-black border-[#7C3AED]"
-                  }
-
-                  focus:border-[#7C3AED]
-                `}
-              ></textarea>
-
-              {errors.message && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.message}
-                </p>
-              )}
-            </div>
-
-            {/* BUTTON */}
-            <button
-              type="submit"
-              disabled={sending}
-              className="w-full bg-[#7C3AED] hover:bg-[#6D28D9] transition py-3 rounded-2xl font-semibold text-white"
-            >
-              {sending ? "Sending..." : "Send Message →"}
-            </button>
-          </form>
-
-          {/* STATUS MESSAGE */}
-          {status && (
-            <div
-              className={`
-                mt-4
-                p-3
-                rounded-lg
-                text-sm
-                font-medium
-
-                ${
-                  status.type === "success"
-                    ? "bg-green-100 text-green-700"
-                    : status.type === "error"
-                    ? "bg-red-100 text-red-700"
-                    : "bg-gray-100 text-gray-700"
-                }
-              `}
-            >
-              {status.message}
-            </div>
-          )}
-        </motion.div>
+              >
+                {status.message}
+              </motion.div>
+            )}
+          </motion.div>
+        </div>
       </div>
-    </section>
+    </Section>
   );
 }
-
-
-
-
-
-
-
-
-

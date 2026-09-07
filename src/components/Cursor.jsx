@@ -53,6 +53,7 @@ export default function Cursor() {
           transform: `translate3d(${pos.x}px, ${pos.y}px, 0)`,
           background: big ? "rgba(124,58,237,0.08)" : "#7C3AED",
           border: big ? "2px solid rgba(124,58,237,0.7)" : "2px solid rgba(124,58,237,1)",
+          opacity: visible ? 1 : 0,
           transition: "width 150ms ease, height 150ms ease, background 150ms ease, border 150ms ease",
         }}
       />
@@ -65,6 +66,7 @@ export default function Cursor() {
           transform: `translate3d(${pos.x}px, ${pos.y}px, 0)`,
           background: "transparent",
           border: big ? "1px solid rgba(124,58,237,0.12)" : "0px solid transparent",
+          opacity: visible ? 1 : 0,
           transition: "width 180ms ease, height 180ms ease, border 180ms ease",
         }}
       />

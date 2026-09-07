@@ -23,6 +23,8 @@ html { scroll-behavior: smooth; }
 
 .glass { @apply bg-white/60 dark:bg-black/50 backdrop-blur-md rounded-lg shadow-lg }
 
+.section-heading { @apply text-5xl md:text-7xl font-black tracking-tight; }
+
 /* Improve default glass card radius */
 .rounded-2xl { border-radius: 1rem; }
 

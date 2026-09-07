@@ -1,29 +1,189 @@
-import { Download, Mail } from "lucide-react";
-import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
+// About.jsx
+
+import {
+  Download,
+  Mail,
+  Sparkles,
+} from "lucide-react";
+
+import {
+  FaGithub,
+  FaLinkedin,
+  FaInstagram,
+} from "react-icons/fa";
+
 import { motion } from "framer-motion";
 import pick from "../assets/laptop.jpg";
-import cvFile from "../assets/Hifza Bibi.pdf";
-import { useSelector } from "react-redux";
+import Section from "./common/Section";
+import { profile } from "../data/portfolioData";
 
 export default function About() {
-  const { darkMode } = useSelector((state) => state.theme);
 
   return (
-    <section id="about" className="py-20 px-6 md:px-10">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+    <Section id="about">
 
+      {/* ===================== */}
+      {/* BACKGROUND EFFECTS */}
+      {/* ===================== */}
+
+      {/* Purple Glow */}
+      <motion.div
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.2, 0.4, 0.2],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+        }}
+        className="
+          absolute
+          top-0
+          left-0
+          w-[350px]
+          h-[350px]
+          rounded-full
+          bg-[#7C3AED]/20
+          blur-[120px]
+        "
+      />
+
+      {/* Floating Box */}
+      <motion.div
+        animate={{
+          y: [0, -25, 0],
+          rotate: [0, 8, 0],
+        }}
+        transition={{
+          duration: 7,
+          repeat: Infinity,
+        }}
+        className="
+          absolute
+          right-[5%]
+          top-[15%]
+          w-28
+          h-28
+          rounded-[30px]
+          border
+          border-[#7C3AED]/20
+          bg-[#7C3AED]/10
+          backdrop-blur-xl
+        "
+      />
+
+      {/* Small Circle */}
+      <motion.div
+        animate={{
+          y: [0, 20, 0],
+          x: [0, -20, 0],
+        }}
+        transition={{
+          duration: 9,
+          repeat: Infinity,
+        }}
+        className="
+          absolute
+          bottom-[10%]
+          left-[45%]
+          w-20
+          h-20
+          rounded-full
+          border
+          border-cyan-400/20
+          bg-cyan-400/10
+        "
+      />
+
+      {/* ===================== */}
+      {/* MAIN CONTENT */}
+      {/* ===================== */}
+
+      <div
+        className="
+          relative
+          z-10
+          grid
+          md:grid-cols-2
+          gap-20
+          items-center
+        "
+      >
+
+        {/* ===================== */}
         {/* LEFT SIDE IMAGE */}
+        {/* ===================== */}
+
         <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
+          initial={{
+            opacity: 0,
+            x: -120,
+          }}
+
+          whileInView={{
+            opacity: 1,
+            x: 0,
+          }}
+
+          transition={{
+            duration: 1,
+          }}
+
           viewport={{ once: true }}
-          className="relative flex flex-col items-center"
+
+          className="
+            relative
+            flex
+            flex-col
+            items-center
+          "
         >
 
-          {/* IMAGE CONTAINER */}
-          <div className="group relative w-full h-[400px] md:h-[350px] rounded-3xl overflow-hidden shadow-2xl">
+          {/* IMAGE WRAPPER */}
+          <motion.div
 
+            whileHover={{
+              scale: 1.02,
+            }}
+
+            className="
+              group
+              relative
+              w-full
+              h-[420px]
+              md:h-[450px]
+              rounded-[35px]
+              overflow-hidden
+              border
+              border-white/10
+              bg-white/5
+              backdrop-blur-xl
+              shadow-[0_20px_80px_rgba(124,58,237,0.25)]
+            "
+          >
+
+            {/* Rotating Border */}
+            <motion.div
+              animate={{
+                rotate: 360,
+              }}
+              transition={{
+                duration: 18,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              className="
+                absolute
+                inset-5
+                rounded-[30px]
+                border
+                border-dashed
+                border-[#7C3AED]/30
+                z-10
+              "
+            />
+
+            {/* IMAGE */}
             <img
               src={pick}
               alt="Hifza"
@@ -31,174 +191,327 @@ export default function About() {
                 w-full
                 h-full
                 object-cover
-                transition-transform
+                transition-all
                 duration-700
-                group-hover:scale-105
+                group-hover:scale-110
               "
             />
 
-            {/* OPTIONAL OVERLAY */}
+            {/* Overlay */}
             <div
               className="
                 absolute
                 inset-0
-                bg-black/10
-                opacity-0
-                group-hover:opacity-100
-                transition
-                duration-500
+                bg-gradient-to-t
+                from-black/50
+                to-transparent
               "
             />
-          </div>
 
+            {/* Floating Badge */}
+            <motion.div
+
+              animate={{
+                y: [0, -12, 0],
+              }}
+
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+              }}
+
+              className="
+                absolute
+                bottom-6
+                left-6
+                z-20
+                px-5
+                py-3
+                rounded-2xl
+                bg-white/10
+                backdrop-blur-xl
+                border
+                border-white/10
+              "
+            >
+
+              <p className="text-sm text-white">
+                UI / UX Focused Developer
+              </p>
+
+            </motion.div>
+
+          </motion.div>
+
+          {/* ===================== */}
           {/* SOCIAL ICONS */}
-          <div
-            className="
-              relative
-              z-20
-              flex
-              gap-6
-              bg-white
-              dark:bg-black
-              px-8
-              py-4
-              rounded-xl
-              shadow-xl
-              mt-[-30px]
-            "
+          {/* ===================== */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="relative z-30 flex gap-6 px-8 py-5 rounded-2xl bg-[#111827]/80 backdrop-blur-xl border border-white/10 shadow-[0_10px_40px_rgba(124,58,237,0.2)] mt-[-35px]"
           >
+            {[
+              { icon: <FaInstagram size={20} />, href: profile.socialLinks.instagram },
+              { icon: <FaLinkedin size={20} />, href: profile.socialLinks.linkedin },
+              { icon: <FaGithub size={20} />, href: profile.socialLinks.github },
+            ].map((item, index) => (
 
-            {/* Instagram */}
-            <a
-              href="#"
-              className="
-                text-[#7C3AED]
-                transition-transform
-                duration-300
-                hover:scale-110
-                hover:text-[#6D28D9]
-              "
-            >
-              <FaInstagram size={20} />
-            </a>
+              <motion.a
+                key={index}
 
-            {/* Linkedin */}
-            <a
-              href="#"
-              className="
-                text-[#7C3AED]
-                transition-transform
-                duration-300
-                hover:scale-110
-                hover:text-[#6D28D9]
-              "
-            >
-              <FaLinkedin size={20} />
-            </a>
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
 
-            {/* Github */}
-            <a
-              href="#"
-              className="
-                text-[#7C3AED]
-                transition-transform
-                duration-300
-                hover:scale-110
-                hover:text-[#6D28D9]
-              "
-            >
-              <FaGithub size={20} />
-            </a>
+                whileHover={{
+                  scale: 1.2,
+                  y: -5,
+                }}
 
-          </div>
+                whileTap={{
+                  scale: 0.9,
+                }}
+
+                className="
+                  text-[#7C3AED]
+                  hover:text-white
+                  transition-all
+                  duration-300
+                "
+              >
+                {item.icon}
+              </motion.a>
+
+            ))}
+
+          </motion.div>
 
         </motion.div>
 
-        {/* RIGHT SIDE */}
+        {/* ===================== */}
+        {/* RIGHT SIDE CONTENT */}
+        {/* ===================== */}
+
         <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
+
+          initial={{
+            opacity: 0,
+            x: 120,
+          }}
+
+          whileInView={{
+            opacity: 1,
+            x: 0,
+          }}
+
+          transition={{
+            duration: 1,
+          }}
+
           viewport={{ once: true }}
+
+          className="relative z-10"
         >
 
-          <h2
-            className={`
-              text-5xl
-              md:text-6xl
-              font-extrabold
-              mt-4
-              mb-4
-              ${darkMode ? "text-white" : "text-black"}
-            `}
-          >
-            About <span className="text-[#7C3AED]">Me</span>
-          </h2>
+          {/* Badge */}
+          <motion.div
 
-          <p
-            className={`
-              ${
-                darkMode
-                  ? "text-gray-400"
-                  : "text-gray-500"
-              }
-              leading-relaxed
-              mb-6
-            `}
-          >
-            I am a passionate Frontend Developer specializing in
-            React.js. I build responsive, scalable, and
-            high-performance web applications with modern UI/UX
-            principles.
+            initial={{
+              opacity: 0,
+              y: -20,
+            }}
 
-            I offer complete digital services for clients,
-            specializing in the creation of stylish, modern
-            websites and powerful web services — blending
-            intuitive design with cutting-edge functionality to
-            deliver seamless user experiences.
-          </p>
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
 
-          <p
-            className={`
-              ${
-                darkMode
-                  ? "text-gray-400"
-                  : "text-gray-500"
-              }
-              leading-relaxed
+            transition={{
+              delay: 0.2,
+            }}
+
+            className="
+              inline-flex
+              items-center
+              gap-2
+              px-5
+              py-2
+              rounded-full
+              bg-[#7C3AED]/10
+              border
+              border-[#7C3AED]/20
               mb-8
-            `}
+            "
           >
-            My focus is on writing clean code, optimizing
-            performance, and delivering smooth digital
-            experiences.
-          </p>
 
-          <div className="flex gap-4 flex-wrap">
+            <Sparkles
+              size={17}
+              className="text-[#7C3AED]"
+            />
 
-            {/* DOWNLOAD CV */}
-            <a
-              href={cvFile}
+            <span className="text-[#7C3AED] text-sm">
+              About Me
+            </span>
+
+          </motion.div>
+
+          {/* HEADING */}
+          <motion.h2
+
+            initial={{
+              opacity: 0,
+              y: 50,
+            }}
+
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+
+            transition={{
+              delay: 0.3,
+            }}
+
+            className="section-heading leading-tight mb-8 text-white"
+          >
+
+            Crafting
+            <br />
+
+            <span
+              className="
+                text-[#7C3AED]
+                drop-shadow-[0_0_25px_rgba(124,58,237,0.5)]
+              "
+            >
+              Digital
+            </span>
+
+            {" "}Experiences
+
+          </motion.h2>
+
+          {/* PARAGRAPH 1 */}
+          <motion.p
+
+            initial={{
+              opacity: 0,
+              y: 30,
+            }}
+
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+
+            transition={{
+              delay: 0.5,
+            }}
+
+            className="text-[17px] leading-relaxed mb-6 max-w-xl text-gray-400"
+          >
+
+            {profile.bio[0]}
+
+          </motion.p>
+
+          {/* PARAGRAPH 2 */}
+          <motion.p
+
+            initial={{
+              opacity: 0,
+              y: 30,
+            }}
+
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+
+            transition={{
+              delay: 0.7,
+            }}
+
+            className="text-[17px] leading-relaxed mb-10 max-w-xl text-gray-400"
+          >
+
+            {profile.bio[1]}
+
+          </motion.p>
+
+          {/* BUTTONS */}
+          <motion.div
+
+            initial={{
+              opacity: 0,
+              y: 30,
+            }}
+
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+
+            transition={{
+              delay: 0.9,
+            }}
+
+            className="
+              flex
+              flex-wrap
+              gap-5
+            "
+          >
+
+            {/* DOWNLOAD BUTTON */}
+            <motion.a
+
+              whileHover={{
+                scale: 1.05,
+                y: -4,
+              }}
+
+              whileTap={{
+                scale: 0.95,
+              }}
+
+              href={profile.resume}
               download
+
               className="
                 flex
                 items-center
-                gap-2
+                gap-3
+                px-7
+                py-4
+                rounded-2xl
                 bg-[#7C3AED]
                 text-white
-                px-6
-                py-3
-                rounded-2xl
-                hover:scale-105
-                transition
-                duration-300
+                font-medium
+                shadow-[0_10px_40px_rgba(124,58,237,0.35)]
               "
             >
-              Download CV <Download size={18} />
-            </a>
+
+              Download CV
+
+              <Download size={18} />
+
+            </motion.a>
 
             {/* CONTACT BUTTON */}
-            <button
+            <motion.button
+
+              whileHover={{
+                scale: 1.05,
+                y: -4,
+              }}
+
+              whileTap={{
+                scale: 0.95,
+              }}
+
               onClick={() =>
                 document
                   .getElementById("contact")
@@ -206,30 +519,35 @@ export default function About() {
                     behavior: "smooth",
                   })
               }
+
               className="
                 flex
                 items-center
-                gap-2
+                gap-3
+                px-7
+                py-4
+                rounded-2xl
                 border
                 border-[#7C3AED]
-                px-6
-                py-3
-                rounded-2xl
                 text-[#7C3AED]
                 hover:bg-[#7C3AED]
                 hover:text-white
-                transition
+                transition-all
                 duration-300
               "
             >
-              Contact Me <Mail size={18} />
-            </button>
 
-          </div>
+              Contact Me
+
+              <Mail size={18} />
+
+            </motion.button>
+
+          </motion.div>
 
         </motion.div>
 
       </div>
-    </section>
+    </Section>
   );
 }
