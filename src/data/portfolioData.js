@@ -65,14 +65,67 @@ export const experience = [
 ];
 
 export const projects = [
-  { id: "01", title: "Investment Calculator", tag: "React App", image: investmentCalcImg, desc: "A smart investment calculator built with React for financial planning and growth tracking.", tech: ["React", "JavaScript", "CSS"], link: "https://github.com/Hifzabibi/Investment-calculator" },
-  { id: "02", title: "Quranic Center Website", tag: "Frontend", image: quranicCenterImg, desc: "Modern Islamic learning website using React and Tailwind CSS with responsive UI.", tech: ["React", "Tailwind CSS"], link: "https://github.com/Hifzabibi/QuranicCenter-website" },
-  { id: "03", title: "Uplaw Website", tag: "API Integration", image: uplawWebsiteImg, desc: "Law firm website with API integration, dynamic content, built using React & Tailwind.", tech: ["React", "Tailwind", "API"], link: "https://github.com/Hifzabibi/Uplaw-website" },
-  { id: "04", title: "Uplaw Admin Dashboard", tag: "Dashboard", image: uplawAdminImg, desc: "Fully responsive admin dashboard built with React, Redux Toolkit, and reusable components.", tech: ["React", "Redux Toolkit", "Tailwind"], link: "https://github.com/Hifzabibi/uplaw-admin" },
-  { id: "05", title: "Password Manager", tag: "Full Stack App", image: passwordManagerImg, desc: "A secure full-stack password manager to save, view and manage credentials, built with a React.js frontend and a Node.js + MongoDB backend.", tech: ["React", "Node.js", "MongoDB", "Express"], link: "https://github.com/Hifzabibi/Password-Manager-.git" },
-  { id: "06", title: "Amazon Website", tag: "React App", image: amazonWebImg, desc: "A React.js based Amazon-style e-commerce UI clone featuring smooth animations and Lucide icons for a clean, modern shopping experience.", tech: ["React", "Framer Motion", "Lucide Icons"], link: "https://github.com/Hifzabibi/Amazon-Web.git" },
+  {
+    id: "01",
+    title: "Amazon Website",
+    tag: "React App",
+    image: amazonWebImg,
+    desc: "A React.js based Amazon-style e-commerce UI clone featuring smooth animations and Lucide icons for a clean, modern shopping experience.",
+    tech: ["React", "Framer Motion", "Lucide Icons"],
+    link: "https://github.com/Hifzabibi/Amazon-Web.git",
+    preview: "https://capable-horse-0cbe08.netlify.app/",
+  },
+  {
+    id: "02",
+    title: "Quranic Center Website",
+    tag: "Frontend",
+    image: quranicCenterImg,
+    desc: "Modern Islamic learning website using React and Tailwind CSS with responsive UI.",
+    tech: ["React", "Tailwind CSS"],
+    link: "https://github.com/Hifzabibi/QuranicCenter-website",
+    preview: "https://quranic-center-website.vercel.app/",
+  },
+  {
+    id: "03",
+    title: "Uplaw Website",
+    tag: "API Integration",
+    image: uplawWebsiteImg,
+    desc: "Law firm website with API integration, dynamic content, built using React & Tailwind.",
+    tech: ["React", "Tailwind", "API"],
+    link: "https://github.com/Hifzabibi/Uplaw-website",
+    preview: "https://teal-pony-6e93b4.netlify.app/",
+  },
+  {
+    id: "04",
+    title: "Uplaw Admin Dashboard",
+    tag: "Dashboard",
+    image: uplawAdminImg,
+    desc: "Fully responsive admin dashboard built with React, Redux Toolkit, and reusable components.",
+    tech: ["React", "Redux Toolkit", "Tailwind"],
+    link: "https://github.com/Hifzabibi/uplaw-admin",
+    // No preview field — is project ka live preview nahi hai
+  },
+  {
+    id: "05",
+    title: "Password Manager",
+    tag: "Full Stack App",
+    image: passwordManagerImg,
+    desc: "A secure full-stack password manager to save, view and manage credentials, built with a React.js frontend and a Node.js + MongoDB backend.",
+    tech: ["React", "Node.js", "MongoDB", "Express"],
+    link: "https://github.com/Hifzabibi/Password-Manager-.git",
+    preview: "https://ornate-cuchufli-9fe38b.netlify.app/",
+  },
+  {
+    id: "06",
+    title: "Investment Calculator",
+    tag: "React App",
+    image: investmentCalcImg,
+    desc: "A smart investment calculator built with React for financial planning and growth tracking.",
+    tech: ["React", "JavaScript", "CSS"],
+    link: "https://github.com/Hifzabibi/Investment-calculator",
+    preview: "https://investment-calculator-lovat-one.vercel.app/",
+  },
 ];
-
 export const skills = {
   mainSkills: [
     { name: "React", img: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
