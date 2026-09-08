@@ -1,5 +1,5 @@
 import cvFile from "../assets/Hifza Bibi.pdf";
-import investmentCalcImg from "../assets/investment.jpg";
+import investmentCalcImg from "../assets/investment.png";
 import quranicCenterImg from "../assets/quranic center.jpg";
 import uplawWebsiteImg from "../assets/uplaw.jpg";
 import uplawAdminImg from "../assets/dashboard.jpg";
