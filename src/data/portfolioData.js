@@ -15,8 +15,8 @@ export const profile = {
   ],
   resume: cvFile,
   email: "hissijadoon@gmail.com",
-  phone: "+92 3321536332",
-  location: "Abbottabad, KPK Pakistan",
+  phone: "+92 9999999999",
+  location: "IT Park Mandian Abbottabad",
   socialLinks: {
     github: "https://github.com/Hifzabibi",
     linkedin: "https://www.linkedin.com/in/hifza-jadoon-28001b318",

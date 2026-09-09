@@ -11,21 +11,20 @@ export default function Contact() {
   const formRef = useRef(null);
 
   const [status, setStatus] = useState(null);
-
-  const [sending, setSending] = useState(false);
+const [copied, setCopied] = useState(false);
+const [sending, setSending] = useState(false);
 
   const [errors, setErrors] = useState({});
 
-  const copyEmail = () => {
-    navigator.clipboard.writeText(email);
+ const copyEmail = async () => {
+  await navigator.clipboard.writeText(email);
 
-    setStatus({
-      type: "info",
-      message: "Email copied to clipboard",
-    });
+  setCopied(true);
 
-    setTimeout(() => setStatus(null), 2000);
-  };
+  setTimeout(() => {
+    setCopied(false);
+  }, 2000);
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -89,12 +88,7 @@ export default function Contact() {
     });
 
     try {
-      await emailjs.sendForm(
-        serviceID,
-        templateID,
-        formRef.current,
-        publicKey
-      );
+      await emailjs.sendForm(serviceID, templateID, formRef.current, publicKey);
 
       setStatus({
         type: "success",
@@ -135,15 +129,11 @@ export default function Contact() {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2
-            className="section-heading text-white"
-          >
+          <h2 className="section-heading text-white">
             Contact <span className="text-[#7C3AED]">Me</span>
           </h2>
 
-          <p
-            className="mt-5 text-lg text-gray-400"
-          >
+          <p className="mt-5 text-lg text-gray-400">
             Let's create something beautiful together
           </p>
         </motion.div>
@@ -160,9 +150,7 @@ export default function Contact() {
           >
             {/* TITLE */}
             <div>
-              <h1
-                className="text-5xl md:text-6xl font-black leading-tight text-white"
-              >
+              <h1 className="text-5xl md:text-6xl font-black leading-tight text-white">
                 Let's Build
               </h1>
 
@@ -170,11 +158,9 @@ export default function Contact() {
                 Something Great
               </h2>
 
-              <p
-                className="mt-6 max-w-xl leading-relaxed text-lg text-gray-400"
-              >
-                I'm actively looking for opportunities. If you're hiring
-                a frontend developer or building a project, let's talk.
+              <p className="mt-6 max-w-xl leading-relaxed text-lg text-gray-400">
+                I'm actively looking for opportunities. If you're hiring a
+                frontend developer or building a project, let's talk.
               </p>
             </div>
 
@@ -188,20 +174,30 @@ export default function Contact() {
                 <div>
                   <p className="text-[#7C3AED] text-sm mb-1">Email</p>
 
-                  <p
-                    className="font-medium text-gray-300"
-                  >
-                    {email}
-                  </p>
+                  <p className="font-medium text-gray-300">{email}</p>
                 </div>
 
-                <button
-                  onClick={copyEmail}
-                  className="flex items-center gap-2 bg-[#7C3AED] text-white px-4 py-2 rounded-xl hover:scale-105 transition"
-                >
-                  <Copy size={16} />
-                  Copy
-                </button>
+                <div className="relative">
+                  {copied && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 
+                 bg-green-500 text-white text-xs font-medium 
+                 px-3 py-1.5 rounded-lg whitespace-nowrap"
+                    >
+                      Copied!
+                    </motion.div>
+                  )}
+
+                  <button
+                    onClick={copyEmail}
+                    className="flex items-center gap-2 bg-[#7C3AED] text-white px-4 py-2 rounded-xl hover:scale-105 transition"
+                  >
+                    <Copy size={16} />
+                    {copied ? "Copied" : "Copy"}
+                  </button>
+                </div>
               </motion.div>
 
               {/* PHONE */}
@@ -211,11 +207,7 @@ export default function Contact() {
               >
                 <p className="text-[#7C3AED] text-sm mb-1">Phone</p>
 
-                <p
-                  className="font-medium text-gray-300"
-                >
-                    {phone}
-                </p>
+                <p className="font-medium text-gray-300">{phone}</p>
               </motion.div>
 
               {/* LOCATION */}
@@ -225,11 +217,7 @@ export default function Contact() {
               >
                 <p className="text-[#7C3AED] text-sm mb-1">Location</p>
 
-                <p
-                  className="font-medium text-gray-300"
-                >
-                  {location}
-                </p>
+                <p className="font-medium text-gray-300">{location}</p>
               </motion.div>
             </div>
 
@@ -256,9 +244,7 @@ export default function Contact() {
             {/* TOP GLOW */}
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-[#7C3AED]/20 blur-3xl rounded-full" />
 
-            <h3
-              className="text-3xl font-bold mb-8 relative z-10 text-white"
-            >
+            <h3 className="text-3xl font-bold mb-8 relative z-10 text-white">
               Send Me a Message
             </h3>
 
@@ -269,9 +255,7 @@ export default function Contact() {
             >
               {/* NAME */}
               <div>
-                <label className="text-sm text-gray-500">
-                  Full Name *
-                </label>
+                <label className="text-sm text-gray-500">Full Name *</label>
 
                 <input
                   name="name"
@@ -281,17 +265,13 @@ export default function Contact() {
                 />
 
                 {errors.name && (
-                  <p className="text-red-500 text-sm mt-2">
-                    {errors.name}
-                  </p>
+                  <p className="text-red-500 text-sm mt-2">{errors.name}</p>
                 )}
               </div>
 
               {/* EMAIL */}
               <div>
-                <label className="text-sm text-gray-500">
-                  Email *
-                </label>
+                <label className="text-sm text-gray-500">Email *</label>
 
                 <input
                   name="email"
@@ -301,17 +281,13 @@ export default function Contact() {
                 />
 
                 {errors.email && (
-                  <p className="text-red-500 text-sm mt-2">
-                    {errors.email}
-                  </p>
+                  <p className="text-red-500 text-sm mt-2">{errors.email}</p>
                 )}
               </div>
 
               {/* SUBJECT */}
               <div>
-                <label className="text-sm text-gray-500">
-                  Subject *
-                </label>
+                <label className="text-sm text-gray-500">Subject *</label>
 
                 <input
                   name="subject"
@@ -321,17 +297,13 @@ export default function Contact() {
                 />
 
                 {errors.subject && (
-                  <p className="text-red-500 text-sm mt-2">
-                    {errors.subject}
-                  </p>
+                  <p className="text-red-500 text-sm mt-2">{errors.subject}</p>
                 )}
               </div>
 
               {/* MESSAGE */}
               <div>
-                <label className="text-sm text-gray-500">
-                  Message *
-                </label>
+                <label className="text-sm text-gray-500">Message *</label>
 
                 <textarea
                   name="message"
@@ -341,9 +313,7 @@ export default function Contact() {
                 ></textarea>
 
                 {errors.message && (
-                  <p className="text-red-500 text-sm mt-2">
-                    {errors.message}
-                  </p>
+                  <p className="text-red-500 text-sm mt-2">{errors.message}</p>
                 )}
               </div>
 
@@ -387,8 +357,8 @@ export default function Contact() {
                     status.type === "success"
                       ? "bg-green-500/20 text-green-400"
                       : status.type === "error"
-                      ? "bg-red-500/20 text-red-400"
-                      : "bg-gray-500/20 text-gray-300"
+                        ? "bg-red-500/20 text-red-400"
+                        : "bg-gray-500/20 text-gray-300"
                   }
                 `}
               >
